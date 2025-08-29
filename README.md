@@ -26,13 +26,16 @@ A sophisticated movie search engine that understands natural language queries an
    cd movie-search-engine
    ```
 
-2. **Install dependencies**
+2. **Install dependencies and activate venv**
    ```bash
    # Using uv (recommended)
    uv sync
    
    # Or using pip
    pip install -r requirements.txt
+   
+   # Activate virtual environment
+   source .venv/bin/activate
    ```
 
 3. **Download the dataset**
@@ -50,6 +53,11 @@ python app.py
 Visit `http://localhost:5000` in your browser.
 
 #### Command Line Interface
+
+**Important**: Ensure the virtual environment is activated.
+
+**IMPORTANT 2**: First run will be longer, then nest ones (!).
+
 ```bash
 # Interactive mode
 python cli.py -i
