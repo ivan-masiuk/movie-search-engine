@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search Engine</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 mb-3">
+                <i class="fas fa-film text-primary me-3"></i>Movie Search Engine
+            </h1>
+            <p class="lead text-muted">
+                Find movies using natural language queries
+            </p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <form method="POST" action="/search" class="needs-validation" novalidate>
+                            <div class="mb-4">
+                                <label for="query" class="form-label h5">
+                                    <i class="fas fa-search me-2"></i>Search Query
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control form-control-lg" 
+                                    id="query" 
+                                    name="query" 
+                                    placeholder="e.g., sci-fi movies from the 90s with Tom Hanks"
+                                    value="{{ request.form.get('query', '') if request.form else '' }}"
+                                    required
+                                >
+                                <div class="invalid-feedback">
+                                    Please enter a search query.
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-search me-2"></i>Search Movies
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8">
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Example Queries -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>Example Queries
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none example-query" data-query="sci-fi movies from the 90s">
+                                            <i class="fas fa-rocket text-primary me-2"></i>sci-fi movies from the 90s
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none example-query" data-query="comedy films with Tom Hanks">
+                                            <i class="fas fa-laugh text-success me-2"></i>comedy films with Tom Hanks
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none example-query" data-query="war movies about love">
+                                            <i class="fas fa-heart text-danger me-2"></i>war movies about love
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none example-query" data-query="horror films from early 2000s">
+                                            <i class="fas fa-ghost text-secondary me-2"></i>horror films from early 2000s
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none example-query" data-query="animated movies for family">
+                                            <i class="fas fa-child text-info me-2"></i>animated movies for family
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="#" class="text-decoration-none example-query" data-query="action movies directed by Steven Spielberg">
+                                            <i class="fas fa-video text-warning me-2"></i>action movies directed by Steven Spielberg
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-8">
+                <h3 class="text-center mb-4">
+                    <i class="fas fa-magic me-2"></i>Search Features
+                </h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="text-center">
+                            <i class="fas fa-language fa-2x text-primary mb-3"></i>
+                            <h6>Natural Language</h6>
+                            <p class="text-muted small">Search using everyday language</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="text-center">
+                            <i class="fas fa-calendar-alt fa-2x text-success mb-3"></i>
+                            <h6>Smart Date Parsing</h6>
+                            <p class="text-muted small">Understands "90s", "early 2000s", etc.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="text-center">
+                            <i class="fas fa-users fa-2x text-info mb-3"></i>
+                            <h6>Cast & Crew Search</h6>
+                            <p class="text-muted small">Find movies by actors and directors</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-muted mt-5 py-4">
+        <div class="container">
+            <p>&copy; 2025 Give Me Offer. Powered by N-ix motivation.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        // Example query click handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            const exampleQueries = document.querySelectorAll('.example-query');
+            const queryInput = document.getElementById('query');
+
+            exampleQueries.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const query = this.getAttribute('data-query');
+                    queryInput.value = query;
+                    queryInput.focus();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

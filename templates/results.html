@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Movie Search Engine</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">
+                <i class="fas fa-film text-primary me-2"></i>Movie Search Results
+            </h1>
+            <a href="/" class="btn btn-outline-secondary">
+                <i class="fas fa-search me-2"></i>New Search
+            </a>
+        </div>
+
+        <!-- Search Query Display -->
+        <div class="card mb-4">
+            <div class="card-body py-3">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <p class="mb-0">
+                            <strong>Query:</strong> "{{ query }}"
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <span class="badge bg-primary">
+                            {{ results|length }} result{{ 's' if results|length != 1 else '' }} found
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        {% if results %}
+            <div class="row">
+                {% for movie in results %}
+                <div class="col-12 mb-4">
+                    <div class="card movie-card h-100">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <!-- Movie Title and Year -->
+                                    <h5 class="card-title mb-2">
+                                        {{ movie.title }}
+                                        {% if movie.year %}
+                                            <span class="text-muted">{{ movie.year }}</span>
+                                        {% endif %}
+                                    </h5>
+
+                                    <!-- Genres -->
+                                    {% if movie.genres %}
+                                    <div class="mb-2">
+                                        {% for genre in movie.genres %}
+                                            <span class="badge bg-secondary me-1">{{ genre }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+
+                                    <!-- Cast -->
+                                    {% if movie.cast %}
+                                    <p class="mb-2">
+                                        <i class="fas fa-users text-primary me-2"></i>
+                                        <strong>Cast:</strong> {{ movie.cast|join(', ') }}
+                                    </p>
+                                    {% endif %}
+
+                                    <!-- Directors -->
+                                    {% if movie.directors %}
+                                    <p class="mb-2">
+                                        <i class="fas fa-video text-success me-2"></i>
+                                        <strong>Director:</strong> {{ movie.directors|join(', ') }}
+                                    </p>
+                                    {% endif %}
+
+                                    <!-- Overview -->
+                                    {% if movie.overview %}
+                                    <p class="card-text text-muted">
+                                        {{ movie.overview }}
+                                    </p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Relevance Score -->
+                                <div class="col-md-4 text-md-end">
+                                    <div class="relevance-score">
+                                        <div class="text-center">
+                                            <div class="relevance-circle mb-2">
+                                                <span class="relevance-number">{{ movie.relevance_score }}%</span>
+                                            </div>
+                                            <small class="text-muted">Relevance</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination or Load More (if needed) -->
+            {% if results|length >= 20 %}
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-primary" disabled>
+                    <i class="fas fa-ellipsis-h me-2"></i>Showing top 20 results
+                </button>
+            </div>
+            {% endif %}
+
+        {% else %}
+            <!-- No Results -->
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-search fa-4x text-muted"></i>
+                </div>
+                <h4 class="text-muted mb-3">No movies found</h4>
+                <p class="text-muted mb-4">
+                    Try adjusting your search query or use different keywords.
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Search Tips:</h6>
+                                <ul class="list-unstyled text-start">
+                                    <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Try broader terms</li>
+                                    <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Check spelling of actor names</li>
+                                    <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Use genre synonyms (sci-fi, rom-com)</li>
+                                    <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Try different year formats (90s, 1990s)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Back to Search -->
+        <div class="text-center mt-5 mb-4">
+            <a href="/" class="btn btn-primary btn-lg">
+                <i class="fas fa-search me-2"></i>Search Again
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-muted py-4">
+        <div class="container">
+            <p>&copy; 2025 Movie Search Engine. Powered by MSRD Dataset.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add smooth animations for card hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const movieCards = document.querySelectorAll('.movie-card');
+            
+            movieCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

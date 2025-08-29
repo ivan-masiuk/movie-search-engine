@@ -1,0 +1,13 @@
+*.pyc
+__pycache__/
+.git/
+.pytest_cache/
+.coverage
+.venv/
+node_modules/
+*.log
+.DS_Store
+.env
+index/
+.idea/
+data/

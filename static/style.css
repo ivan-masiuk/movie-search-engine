@@ -1,0 +1,169 @@
+/* Custom styles for Movie Search Engine */
+
+.movie-card {
+    transition: all 0.3s ease;
+    border: 1px solid var(--bs-border-color);
+}
+
+.movie-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.relevance-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.relevance-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bs-primary), var(--bs-info));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.relevance-number {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.example-query {
+    transition: all 0.2s ease;
+}
+
+.example-query:hover {
+    color: var(--bs-primary) !important;
+    transform: translateX(5px);
+}
+
+/* Badge styling */
+.badge {
+    font-size: 0.85em;
+    padding: 0.5em 0.75em;
+}
+
+/* Card enhancements */
+.card {
+    border-radius: 0.75rem;
+    border: 1px solid var(--bs-border-color);
+}
+
+.card-header {
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+/* Form enhancements */
+.form-control-lg {
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+}
+
+.btn-lg {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Animation for search results */
+.movie-card {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger animation for multiple cards */
+.movie-card:nth-child(1) { animation-delay: 0.1s; }
+.movie-card:nth-child(2) { animation-delay: 0.2s; }
+.movie-card:nth-child(3) { animation-delay: 0.3s; }
+.movie-card:nth-child(4) { animation-delay: 0.4s; }
+.movie-card:nth-child(5) { animation-delay: 0.5s; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .relevance-circle {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .relevance-number {
+        font-size: 0.9rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Focus states for accessibility */
+.form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Icon spacing */
+.fas, .far, .fab {
+    margin-right: 0.5rem;
+}
+
+/* Search tips styling */
+.list-unstyled li {
+    padding: 0.25rem 0;
+}
+
+/* Footer styling */
+footer {
+    border-top: 1px solid var(--bs-border-color);
+    margin-top: 3rem;
+}
+
+/* Error message styling */
+.alert {
+    border-radius: 0.75rem;
+}
+
+/* Status indicators */
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.status-ready {
+    background-color: var(--bs-success);
+}
+
+.status-loading {
+    background-color: var(--bs-warning);
+    animation: pulse 1.5s infinite;
+}
+
+.status-error {
+    background-color: var(--bs-danger);
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
